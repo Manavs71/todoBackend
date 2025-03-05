@@ -17,5 +17,7 @@ export enum Permission {
   CONTACT_DELETE = 'contact.delete',
 
   TODO_CREATE = 'todo.create',
-  TYPESENSE = 'typesense'
+  TODO_UPDATE = "todo.update",
+
+  TYPESENSE = 'typesense',
 }
