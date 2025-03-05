@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@wisemen/nestjs-typeorm'
 import { CreateTodoModule } from './create-todo/create-todo.module.js'
 import { UpdateTodoModule } from './update-todo/update-todo.module.js'
+import { DeleteTodoModule } from './delete-todo/delete-todo.module.js'
 
 @Module({
     imports: [
@@ -10,6 +11,7 @@ import { UpdateTodoModule } from './update-todo/update-todo.module.js'
         ]),
         CreateTodoModule,
         UpdateTodoModule,
+        DeleteTodoModule
     ],
     providers: [],
     exports: []
