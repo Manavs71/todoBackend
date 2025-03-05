@@ -9,9 +9,13 @@ import {
   OneToMany
 } from 'typeorm'
 import { UserRole } from '../../roles/entities/user-role.entity.js'
+import { Todo } from '../../../modules/todo/entities/todo.entity.js'
 
 @Entity()
 export class User {
+  @OneToMany(() => Todo, todo => todo.user)
+  todos?: Array<Relation<Todo>>
+
   @PrimaryGeneratedColumn('uuid')
   uuid: string
 
