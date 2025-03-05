@@ -12,6 +12,7 @@ import { ContactModule } from '../../app/contact/contact.module.js'
 import { PreferencesModule } from '../../app/preferences/preferences.module.js'
 import { AuthMiddleware } from '../auth/middleware/auth.middleware.js'
 import { TodoModule } from '../todo/use-cases/todo.module.js'
+import { UpdateTodoModule } from '../todo/use-cases/update-todo/update-todo.module.js'
 
 @Module({
   imports: [

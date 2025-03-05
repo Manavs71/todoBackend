@@ -1,14 +1,14 @@
-// create-todo.command.ts
-import { ApiProperty } from '@nestjs/swagger'
 import { IsDateString, IsNotEmpty, IsString } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger'
 import { IsNullable } from '@wisemen/validators'
 
-export class CreateTodoCommand {
+export class UpdateTodoCommand {
     @ApiProperty()
     @IsNotEmpty()
     title: string
 
     @ApiProperty()
+
     @IsString()
     @IsNullable()
     description: string | null
