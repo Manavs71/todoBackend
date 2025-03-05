@@ -3,11 +3,11 @@ import { Todo } from "../../entities/todo.entity.js"
 // create-todo.response.ts
 export class CreateTodoResponse {
     uuid: string
-    createdAt: Date,
-    updatedAt: Date,
-    title: string,
-    description: string | null ,
-    deadline: string | null,
+    createdAt: Date;
+    updatedAt: Date;
+    title: string;
+    description: string | null;
+    deadline: string | null;
     completed: boolean
 
     constructor(todo: Todo) {

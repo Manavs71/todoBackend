@@ -8,8 +8,11 @@ export class Todo {
     @PrimaryGeneratedColumn('uuid')
     uuid: string
 
+    @Column({ type: 'uuid' })
+    userUuid: string
+
     @ManyToOne(() => User, user => user.todos)
-    @JoinColumn({ name: 'userUuid' })
+    @JoinColumn({ name: 'user_uuid' })
     user?: Relation<User>
 
     @CreateDateColumn({ precision: 3 })

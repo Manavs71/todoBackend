@@ -29,4 +29,4 @@ import { User } from './entities/user.entity.js'
   ],
   exports: [UserAuthService]
 })
-export class UserModule {}
+export class UserModule { }

@@ -11,6 +11,7 @@ import { LocalizationModule } from '../localization/modules/localization.module.
 import { ContactModule } from '../../app/contact/contact.module.js'
 import { PreferencesModule } from '../../app/preferences/preferences.module.js'
 import { AuthMiddleware } from '../auth/middleware/auth.middleware.js'
+import { TodoModule } from '../todo/use-cases/todo.module.js'
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthMiddleware } from '../auth/middleware/auth.middleware.js'
     SwaggerModule,
     StatusModule,
     UserModule,
+    TodoModule,
     RoleModule,
     PermissionModule,
     FileModule,
@@ -28,7 +30,7 @@ import { AuthMiddleware } from '../auth/middleware/auth.middleware.js'
   ]
 })
 export class ApiModule {
-  configure (consumer: MiddlewareConsumer): void {
+  configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(AuthMiddleware)
       .exclude('auth/token')
