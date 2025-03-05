@@ -11,7 +11,7 @@ import type { SetUserRolesCommand } from './set-user-roles.command.js'
 
 @Injectable()
 export class SetUserRolesUseCase {
-  constructor (
+  constructor(
     @InjectRepository(UserRole)
     private userRoleRepository: Repository<UserRole>,
     @InjectRepository(User)
@@ -19,9 +19,9 @@ export class SetUserRolesUseCase {
     private readonly dataSource: DataSource,
     private readonly userCache: UserCache,
     private readonly typesenseService: TypesenseCollectionService
-  ) {}
+  ) { }
 
-  async changeRoles (userUuid: string, dto: SetUserRolesCommand): Promise<void> {
+  async changeRoles(userUuid: string, dto: SetUserRolesCommand): Promise<void> {
     const user = await this.userRepository.findOneOrFail({
       where: { uuid: userUuid },
       relations: { userRoles: { role: true } }
@@ -48,8 +48,7 @@ export class SetUserRolesUseCase {
       })
     })
 
-    await this.userCache.setUserRo
-    les(userUuid, dto.roleUuids)
+    await this.userCache.setUserRoles(userUuid, dto.roleUuids)
     await this.typesenseService.importManually(TypesenseCollectionName.USER, [user])
   }
 }
