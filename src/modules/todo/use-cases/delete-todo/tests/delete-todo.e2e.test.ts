@@ -43,7 +43,7 @@ describe('Update todo end to end tests', () => {
         it('should return 401 when not authenticated', async () => {
             const response = await request(setup.httpServer)
                 .delete(`/todos/${createdTodo.uuid}`)
-            expect(response.status).toBe(401)
+            expect(response).toHaveStatus(401)
         })
 
         it('should return 403 when not authorized', async () => {
@@ -51,18 +51,14 @@ describe('Update todo end to end tests', () => {
                 .delete(`/todos/${createdTodo.uuid}`)
                 .set('Authorization', `Bearer ${defaultUser.token}`)
                 .send({})
-            expect(response.status).toBe(403)
+            expect(response).toHaveStatus(403)
         })
 
         it('should return 200 when the todo is deleted', async () => {
             const response = await request(setup.httpServer)
                 .delete(`/todos/${createdTodo.uuid}`)
                 .set('Authorization', `Bearer ${adminUser.token}`)
-            expect(response.status).toBe(200)
+            expect(response).toHaveStatus(200)
         })
-
-
-
-
     })
 })

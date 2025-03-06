@@ -1,46 +1,43 @@
-import { UpdateTodoCommand } from "../update-todo.command.js"
+import { UpdateTodoCommand } from '../update-todo.command.js'
 
 // create-todo-command.builder.ts
 export class UpdateTodoCommandBuilder {
-    private command: UpdateTodoCommand
+  private command: UpdateTodoCommand
 
-    constructor() {
-        this.reset()
-    }
+  constructor () {
+    this.reset()
+  }
 
-    reset() {
-        this.command = new UpdateTodoCommand()
-        this.command.title = 'Test Todo'
+  reset () {
+    this.command = new UpdateTodoCommand()
+    this.command.title = 'Test Todo'
 
-        return this
-    }
+    return this
+  }
 
-    withTitle(title: string): this {
-        this.command.title = title
+  withTitle (title: string): this {
+    this.command.title = title
 
-        return this
-    }
+    return this
+  }
 
-    withDescription(description: string | null): this {
-        this.command.description = description
+  withDescription (description: string | null): this {
+    this.command.description = description
 
-        return this
-    }
+    return this
+  }
 
-    withDeadline(deadline: Date | null): this {
-        this.command.deadline = deadline
+  withDeadline (deadline: Date | null): this {
+    this.command.deadline = deadline
 
-        return this
-    }
+    return this
+  }
 
+  build (): UpdateTodoCommand {
+    const result = this.command
 
-    build(): UpdateTodoCommand {
-        const result = this.command;
+    this.reset()
 
-        this.reset()
-
-        return result
-    }
-
-
+    return result
+  }
 }

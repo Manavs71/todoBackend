@@ -5,76 +5,80 @@ import { EndToEndTestSetup } from '../../../../../../test/setup/end-to-end-test-
 import { TestUser } from '../../../../../app/users/tests/setup-user.type.js'
 import { TestBench } from '../../../../../../test/setup/test-bench.js'
 import { TestAuthContext } from '../../../../../../test/utils/test-auth-context.js'
-import { UpdateTodoCommandBuilder } from './update-todo-command.builder.js'
 import { CreateTodoCommandBuilder } from '../../create-todo/tests/create-todo-command.builder.js'
 import { Todo } from '../../../entities/todo.entity.js'
+import { UpdateTodoCommandBuilder } from './update-todo-command.builder.js'
 
 describe('Update todo end to end tests', () => {
-    let setup: EndToEndTestSetup
-    let context: TestAuthContext
-    let adminUser: TestUser
-    let defaultUser: TestUser
-    let createdTodo: Todo
+  let setup: EndToEndTestSetup
+  let context: TestAuthContext
+  let adminUser: TestUser
+  let defaultUser: TestUser
+  let createdTodo: Todo
 
-    before(async () => {
-        setup = await TestBench.setupEndToEndTest()
-        context = setup.authContext
-        adminUser = await context.getAdminUser()
-        defaultUser = await context.getDefaultUser()
+  before(async () => {
+    setup = await TestBench.setupEndToEndTest()
+    context = setup.authContext
+    adminUser = await context.getAdminUser()
+    defaultUser = await context.getDefaultUser()
 
-        const todoDto = new CreateTodoCommandBuilder()
-            .withTitle('Test Todo')
-            .withDescription('Test Description')
-            .withDeadline(new Date())
-            .build()
-        const response = await request(setup.httpServer)
-            .post('/todos')
-            .set('Authorization', `Bearer ${adminUser.token}`)
-            .send(todoDto)
-        console.log('responsebody::', response.body)
+    const todoDto = new CreateTodoCommandBuilder()
+      .withTitle('Test Todo')
+      .withDescription('Test Description')
+      .withDeadline(new Date())
+      .build()
+    const response = await request(setup.httpServer)
+      .post('/todos')
+      .set('Authorization', `Bearer ${adminUser.token}`)
+      .send(todoDto)
 
-        createdTodo = response.body;
+    console.log('responsebody::', response.body)
+
+    createdTodo = response.body
+  })
+
+  after(async () => {
+    await setup.teardown()
+  })
+
+  describe('Update todo', () => {
+    it('should return 401 when not authenticated', async () => {
+      const response = await request(setup.httpServer)
+        .put(`/todos/${createdTodo.uuid}`)
+
+      expect(response).toHaveStatus(401)
     })
 
-    after(async () => {
-        await setup.teardown()
+    it('should return 403 when not authorized', async () => {
+      const response = await request(setup.httpServer)
+        .put(`/todos/${createdTodo.uuid}`)
+        .set('Authorization', `Bearer ${defaultUser.token}`)
+        .send({})
+
+      expect(response).toHaveStatus(403)
     })
 
-    describe('Update todo', () => {
-        it('should return 401 when not authenticated', async () => {
-            const response = await request(setup.httpServer)
-                .put(`/todos/${createdTodo.uuid}`)
-            expect(response.status).toBe(401)
-        })
+    it('should return 400 when the body is invalid', async () => {
+      const response = await request(setup.httpServer)
+        .put(`/todos/${createdTodo.uuid}`)
+        .set('Authorization', `Bearer ${adminUser.token}`)
+        .send({})
 
-        it('should return 403 when not authorized', async () => {
-            const response = await request(setup.httpServer)
-                .put(`/todos/${createdTodo.uuid}`)
-                .set('Authorization', `Bearer ${defaultUser.token}`)
-                .send({})
-            expect(response.status).toBe(403)
-        })
-
-        it('should return 400 when the body is invalid', async () => {
-            const response = await request(setup.httpServer)
-                .put(`/todos/${createdTodo.uuid}`)
-                .set('Authorization', `Bearer ${adminUser.token}`)
-                .send({})
-            expect(response.status).toBe(400)
-        })
-
-        it('should return 200', async () => {
-            const todoDto = new UpdateTodoCommandBuilder()
-                .withTitle('Updated Test Todo')
-                .withDescription('Updated Test Description')
-                .withDeadline(new Date())
-                .build()
-            const response = await request(setup.httpServer)
-                .put(`/todos/${createdTodo.uuid}`)
-                .set('Authorization', `Bearer ${adminUser.token}`)
-                .send(todoDto)
-            expect(response.status).toBe(200)
-
-        })
+      expect(response).toHaveStatus(400)
     })
+
+    it('should return 200', async () => {
+      const todoDto = new UpdateTodoCommandBuilder()
+        .withTitle('Updated Test Todo')
+        .withDescription('Updated Test Description')
+        .withDeadline(new Date())
+        .build()
+      const response = await request(setup.httpServer)
+        .put(`/todos/${createdTodo.uuid}`)
+        .set('Authorization', `Bearer ${adminUser.token}`)
+        .send(todoDto)
+
+      expect(response).toHaveStatus(200)
+    })
+  })
 })

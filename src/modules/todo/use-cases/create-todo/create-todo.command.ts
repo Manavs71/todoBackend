@@ -4,17 +4,17 @@ import { IsDateString, IsNotEmpty, IsString } from 'class-validator'
 import { IsNullable } from '@wisemen/validators'
 
 export class CreateTodoCommand {
-    @ApiProperty()
-    @IsNotEmpty()
-    title: string
+  @ApiProperty({ type: String, example: 'string' })
+  @IsNotEmpty()
+  title: string
 
-    @ApiProperty()
-    @IsString()
-    @IsNullable()
-    description: string | null
+  @ApiProperty({ type: String, nullable: true, example: 'string' })
+  @IsString()
+  @IsNullable()
+  description: string | null
 
-    @ApiProperty()
-    @IsDateString({ strict: true })
-    @IsNullable()
-    deadline: Date | null
+  @ApiProperty({ type: String, nullable: true, example: 'YYYY-MM-DD' })
+  @IsDateString({ strict: true })
+  @IsNullable()
+  deadline: Date | null
 }

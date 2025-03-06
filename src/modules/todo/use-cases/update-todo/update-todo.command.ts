@@ -3,18 +3,17 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsNullable } from '@wisemen/validators'
 
 export class UpdateTodoCommand {
-    @ApiProperty()
-    @IsNotEmpty()
-    title: string
+  @ApiProperty({ type: String, example: 'string' })
+  @IsNotEmpty()
+  title: string
 
-    @ApiProperty()
+  @ApiProperty({ type: String, nullable: true, example: 'string' })
+  @IsString()
+  @IsNullable()
+  description: string | null
 
-    @IsString()
-    @IsNullable()
-    description: string | null
-
-    @ApiProperty()
-    @IsDateString({ strict: true })
-    @IsNullable()
-    deadline: Date | null
+  @ApiProperty({ type: String, nullable: true, example: 'YYYY-MM-DD' })
+  @IsDateString({ strict: true })
+  @IsNullable()
+  deadline: Date | null
 }
