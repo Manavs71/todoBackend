@@ -1,14 +1,14 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@wisemen/nestjs-typeorm";
-import { Todo } from "../../entities/todo.entity.js";
-import { CreateTodoController } from "./create-todo.controller.js";
-import { CreateTodoUseCase } from "./create-todo.use-case.js";
+import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@wisemen/nestjs-typeorm'
+import { Todo } from '../../entities/todo.entity.js'
+import { CreateTodoController } from './create-todo.controller.js'
+import { CreateTodoUseCase } from './create-todo.use-case.js'
 
 // create-todo.module.ts
 @Module({
-    imports: [TypeOrmModule.forFeature([Todo])],
-    controllers: [CreateTodoController],
-    providers: [CreateTodoUseCase],
-    exports: []
+  imports: [TypeOrmModule.forFeature([Todo])],
+  controllers: [CreateTodoController],
+  providers: [CreateTodoUseCase],
+  exports: []
 })
 export class CreateTodoModule { }

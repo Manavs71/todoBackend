@@ -1,13 +1,26 @@
+import { ApiProperty } from '@nestjs/swagger'
 import { Todo } from '../../entities/todo.entity.js'
 
-// create-todo.response.ts
-export class CreateTodoResponse {
+export class ViewTodoDetailResponse {
+  @ApiProperty({ type: String, format: 'uuid' })
   uuid: string
+
+  @ApiProperty({ type: String, format: 'date-time' })
   createdAt: Date
+
+  @ApiProperty({ type: String, format: 'date-time' })
   updatedAt: Date
+
+  @ApiProperty({ type: String, example: 'string' })
   title: string
+
+  @ApiProperty({ type: String, nullable: true, example: 'string' })
   description: string | null
+
+  @ApiProperty({ type: String, nullable: true, example: 'YYYY-MM-DD' })
   deadline: string | null
+
+  @ApiProperty({ type: Boolean, example: false })
   completed: boolean
 
   constructor (todo: Todo) {
